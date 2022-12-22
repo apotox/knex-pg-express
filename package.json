@@ -5,17 +5,24 @@
   "license": "MIT",
   "dependencies": {
     "@types/node": "^18.11.17",
+    "cors": "^2.8.5",
+    "express": "^4.18.2",
     "knex": "^2.3.0",
     "pg": "^8.8.0"
   },
   "devDependencies": {
+    "@types/express": "^4.17.15",
     "@types/knex": "^0.16.1",
-    "ts-node": "^10.9.1",
+    "knex-types": "^0.5.0",
+    "nodemon": "^2.0.20",
+    "ts-node": "^10.9.1", 
     "typescript": "^4.9.4"
   },
   "scripts": {
-    "dev": "PG_CONNECTION_STRING=postgresql://localhost:5432/safi ts-node src/main.ts",
-    "schema": "PG_CONNECTION_STRING=postgresql://localhost:5432/safi ts-node src/build.ts",
-    "build": "tsc --project tsconfig.json"
+    "dev": "nodemon",
+    "generate:types": "ts-node src/scripts/script.ts",
+    "migrate:make": "knex migrate:make",
+    "migrate:run": "knex migrate:latest --knexfile knexfile.js",
+    "build": "yarn generate:types && tsc --project tsconfig.json"
   }
 }

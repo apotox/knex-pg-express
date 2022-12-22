@@ -1,4 +1,8 @@
+import { app } from "./server";
 
-import { pg } from "./pg";
 
+const port = process.env.PORT || 7001
 
+app.listen(port,()=>{
+    console.log("server on port ", port)
+})
