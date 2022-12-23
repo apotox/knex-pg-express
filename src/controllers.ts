@@ -5,31 +5,33 @@ import { Router } from "express";
 
 export const router = Router()
 
-async function insertUser(req, res) {
-    const payload = req.body
+export async function insertUser({body}, {json}) {
+    const payload = body
     const result = await getKnex().table<Users>(Table.Users).insert(payload).returning("id")
         .catch(err => {
             return {
                 message: err.message
             }
         })
-    return res.json(result).end()
+    return json(result).end()
 }
 
-async function getUsers(req, res) {
-    const result = await getKnex().table<Users>(Table.Users).select("*")
+export async function getUsers(_, {json}) {
+   
+    const result = await getKnex().withSchema("public").table<Users>(Table.Users).select("*")
         .catch(err => {
+            console.log('result', err)
             return {
                 message: err.message
             }
         })
 
-    return res.json(result).end()
+    return json(result).end()
 }
 
-async function updateUser(req, res) {
-    const {id} = req.params;
-    const payload = req.body;
+export async function updateUser({params, body}, {json}) {
+    const {id} = params;
+    const payload = body;
 
     const result = await getKnex().table<Users>(Table.Users)
         .update(payload)
@@ -40,7 +42,7 @@ async function updateUser(req, res) {
             }
         })
 
-    return res.json(result).end()
+    return json(result).end()
 }
 
 // routes
