@@ -3,7 +3,7 @@ import { Table, Users } from "./types";
 import { getKnex } from "./database/db";
 
 
-export async function insertUser({body}, {json}) {
+export async function insertUser({body}, res) {
     const payload = body
     const result = await getKnex().table<Users>(Table.Users).insert(payload).returning("id")
         .catch(err => {
@@ -11,10 +11,10 @@ export async function insertUser({body}, {json}) {
                 message: err.message
             }
         })
-    return json(result).end()
+    return res.json(result).end()
 }
 
-export async function getUsers(_, {json}) {
+export async function getUsers(_, res) {
    
     const result = await getKnex().withSchema("public").table<Users>(Table.Users).select("*")
         .catch(err => {
@@ -23,14 +23,13 @@ export async function getUsers(_, {json}) {
             }
         })
 
-    return json(result).end()
+    return res.json(result).end()
 }
 
-export async function updateUser({params, body}, {json}) {
+export async function updateUser({params, body}, res) {
     const {id} = params;
     const payload = body;
 
-    console.log('id', id)
 
     const result = await getKnex().table<Users>(Table.Users)
         .update(payload)
@@ -41,5 +40,5 @@ export async function updateUser({params, body}, {json}) {
             }
         })
 
-    return json(result).end()
+    return res.json(result).end()
 }

@@ -11,6 +11,7 @@ export function getKnex(): Knex{
         return global.__db_knex
     }
     if(!_knex){
+        console.log('environment', environment)
         _knex = knex(config[environment]);
     }
     return _knex;
