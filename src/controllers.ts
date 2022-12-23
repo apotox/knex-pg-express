@@ -1,9 +1,7 @@
 
 import { Table, Users } from "./types";
 import { getKnex } from "./database/db";
-import { Router } from "express";
 
-export const router = Router()
 
 export async function insertUser({body}, {json}) {
     const payload = body
@@ -44,8 +42,3 @@ export async function updateUser({params, body}, {json}) {
 
     return json(result).end()
 }
-
-// routes
-router.post('/', insertUser)
-router.put('/:id', updateUser)
-router.get('/', getUsers)
