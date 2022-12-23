@@ -1,6 +1,6 @@
 {
     "watch": ["src"],
     "ext": "ts,json",
-    "ignore": ["src/**/*.spec.ts"],
+    "ignore": ["migrations","node_modules","build"],
     "exec": "ts-node ./src/main.ts"
   }

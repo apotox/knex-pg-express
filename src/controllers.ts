@@ -18,7 +18,6 @@ export async function getUsers(_, {json}) {
    
     const result = await getKnex().withSchema("public").table<Users>(Table.Users).select("*")
         .catch(err => {
-            console.log('result', err)
             return {
                 message: err.message
             }
@@ -30,6 +29,8 @@ export async function getUsers(_, {json}) {
 export async function updateUser({params, body}, {json}) {
     const {id} = params;
     const payload = body;
+
+    console.log('id', id)
 
     const result = await getKnex().table<Users>(Table.Users)
         .update(payload)
